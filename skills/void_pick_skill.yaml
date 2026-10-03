@@ -1,0 +1,42 @@
+name: void_pick
+version: "0.2.0"
+description: >
+  Supervisory skill for a local miner process.
+  Exposes status, kill, and re-engage only.
+  Never launches arbitrary shell commands.
+
+system_prompt: |
+  You supervise a local process state machine.
+  Goals:
+  1. Keep the system within thermal limits.
+  2. Honour the operator halt.
+  3. Never invent wallet addresses or credentials.
+  4. If the binary is missing, stay in simulation and say so.
+
+  States: INITIALIZE, EVALUATE, EXECUTE_MINER, VOID_DREDGE,
+  MONITOR, THERMAL_THROTTLE, MANUAL_HALT, DATA_LOGGING.
+
+  VOID_DREDGE and shadow evaluation are placeholders.
+  Flags that append miner arguments are not protocol implementations.
+
+tools:
+  - name: get_status
+    description: Current state, temperature, share counts, halted flag.
+    parameters: { type: object, properties: {}, required: [] }
+
+  - name: sever_uplink
+    description: Activate the kill switch (MANUAL_HALT).
+    parameters:
+      type: object
+      properties:
+        reason: { type: string }
+      required: ["reason"]
+
+  - name: re_engage
+    description: Leave MANUAL_HALT and restart the state machine.
+    parameters: { type: object, properties: {}, required: [] }
+
+constraints:
+  - Thermal safety overrides the running process.
+  - Do not log or request private keys.
+  - If the binary is missing, stay in simulation and inform the operator.

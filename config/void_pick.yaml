@@ -1,0 +1,37 @@
+# THE VOID PICK - Configuration
+# Optional flags append miner arguments. They do not implement those protocols.
+# Edit this file before first run.
+
+miner:
+  # Path to your miner binary. Do not bundle the binary.
+  binary_path: "./miners/xmrig"
+  algorithm: "rx/0"
+
+pool:
+  url: "stratum+tcp://pool.supportxmr.com:443"
+  user: "YOUR_WALLET_ADDRESS"
+  password: "x"
+  worker: "void_node_01"
+
+hardware:
+  max_temp_celsius: 85
+  temp_sensor_path: "/sys/class/thermal/thermal_zone0/temp"
+
+advanced:
+  # Concurrent evaluate task. It does not switch routes.
+  shadow_routing: true
+  # Placeholder state. Off.
+  void_dredge_enabled: false
+  void_dredge_threshold: 10.0
+  # Stub. Appends --stratum-v2 if the binary accepts it.
+  prefer_stratum_v2: false
+  pool_weight_multiplier: 1.0
+  # Stub. Appends --proxy if the binary accepts it.
+  use_tor_proxy: false
+  tor_proxy_address: "socks5://127.0.0.1:9050"
+  # Stub. Appends --edge-trim for a few algorithm names.
+  edge_trimming: false
+
+logging:
+  log_dir: "./logs"
+  log_level: "INFO"
